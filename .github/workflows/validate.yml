@@ -1,0 +1,83 @@
+name: 验证技能格式
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'skills/**'
+      - '.claude-plugin/**'
+      - 'scripts/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'skills/**'
+      - '.claude-plugin/**'
+      - 'scripts/**'
+
+jobs:
+  validate-skills:
+    name: 验证技能 SKILL.md 格式
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 赋予脚本执行权限
+        run: chmod +x scripts/validate-skills.sh
+
+      - name: 执行格式验证
+        run: bash scripts/validate-skills.sh
+
+  validate-plugin-json:
+    name: 验证 plugin.json 格式
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 校验 plugin.json
+        run: |
+          echo "检查 plugin.json 必填字段..."
+          for field in name description version author skills; do
+            if ! jq -e ".$field" .claude-plugin/plugin.json > /dev/null 2>&1; then
+              echo "ERROR: plugin.json 缺少字段: $field"
+              exit 1
+            fi
+          done
+          echo "plugin.json 验证通过"
+
+      - name: 校验 marketplace.json
+        run: |
+          echo "检查 marketplace.json 必填字段..."
+          for field in name owner metadata plugins; do
+            if ! jq -e ".$field" .claude-plugin/marketplace.json > /dev/null 2>&1; then
+              echo "ERROR: marketplace.json 缺少字段: $field"
+              exit 1
+            fi
+          done
+          echo "marketplace.json 验证通过"
+
+  check-version-sync:
+    name: 检查版本号一致性
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 对比版本号
+        run: |
+          PLUGIN_VER=$(jq -r '.version' .claude-plugin/plugin.json)
+          MARKET_VER=$(jq -r '.metadata.version' .claude-plugin/marketplace.json)
+
+          echo "plugin.json 版本: $PLUGIN_VER"
+          echo "marketplace.json 版本: $MARKET_VER"
+
+          if [ "$PLUGIN_VER" != "$MARKET_VER" ]; then
+            echo "ERROR: 版本号不一致！plugin.json=$PLUGIN_VER, marketplace.json=$MARKET_VER"
+            exit 1
+          fi
+
+          echo "版本号一致: $PLUGIN_VER"

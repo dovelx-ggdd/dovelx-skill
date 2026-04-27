@@ -1,0 +1,26 @@
+{
+  "name": "dovelx",
+  "description": "DoveLx 个人开发团队技能包 — 需求分析、技术设计、代码审查、审查团队、Bug 排查、QA 测试、全栈工作流、对话式知识问答",
+  "version": "1.3.0",
+  "author": {
+    "name": "WangZhen",
+    "url": "https://github.com/WangZhenLx"
+  },
+  "homepage": "https://github.com/WangZhenLx/dovelx-skill",
+  "repository": "https://github.com/WangZhenLx/dovelx-skill",
+  "license": "MIT",
+  "skills": ["./skills/"],
+  "agents": [
+    "./agents/ask-searcher.md",
+    "./agents/ask-synthesizer.md",
+    "./agents/challenge-reviewer.md",
+    "./agents/code-reviewer.md",
+    "./agents/code-standards-reviewer.md",
+    "./agents/design-reviewer.md",
+    "./agents/requirements-analyst.md",
+    "./agents/security-performance-reviewer.md",
+    "./agents/spec-reviewer.md",
+    "./agents/tech-designer.md"
+  ],
+  "keywords": ["claude-code", "skills", "code-review", "tech-design", "requirements", "full-stack", "workflow", "knowledge-base", "rag", "ask"]
+}

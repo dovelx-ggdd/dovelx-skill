@@ -1,0 +1,82 @@
+name: 自动发版
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: 创建 GitHub Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 从 tag 提取版本号
+        id: version
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG#v}
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "发版版本: $VERSION"
+
+      - name: 校验版本号一致性
+        run: |
+          PLUGIN_VER=$(jq -r '.version' .claude-plugin/plugin.json)
+          TAG_VER="${{ steps.version.outputs.version }}"
+
+          if [ "$PLUGIN_VER" != "$TAG_VER" ]; then
+            echo "ERROR: tag 版本 ($TAG_VER) 与 plugin.json 版本 ($PLUGIN_VER) 不一致"
+            exit 1
+          fi
+          echo "版本校验通过: $PLUGIN_VER"
+
+      - name: 从 CHANGELOG.md 提取发版说明
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+
+          # 提取对应版本的 CHANGELOG 内容
+          NOTES=$(awk "/^## \[$VERSION\]/{found=1; next} found && /^## \[/{exit} found{print}" CHANGELOG.md)
+
+          if [ -z "$NOTES" ]; then
+            NOTES="请查看 [CHANGELOG.md](CHANGELOG.md) 了解详细变更。"
+          fi
+
+          # 写入多行内容到环境变量
+          {
+            echo "notes<<EOF"
+            echo "$NOTES"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: 创建 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "dovelx-skill ${{ steps.version.outputs.tag }}"
+          body: |
+            ## dovelx-skill ${{ steps.version.outputs.tag }}
+
+            ${{ steps.changelog.outputs.notes }}
+
+            ---
+
+            ### 安装 / 更新
+
+            ```
+            /plugin marketplace add WangZhenLx/dovelx-skill
+            /plugin install dovelx@dovelx-skill
+            ```
+
+            完整变更记录见 [CHANGELOG.md](CHANGELOG.md)
+          draft: false
+          prerelease: false
