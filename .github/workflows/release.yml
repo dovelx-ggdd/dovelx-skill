@@ -73,7 +73,7 @@ jobs:
             ### 安装 / 更新
 
             ```
-            /plugin marketplace add WangZhenLx/dovelx-skill
+            /plugin marketplace add DoveXiaZi/dovelx-skill
             /plugin install dovelx@dovelx-skill
             ```
 

@@ -8,14 +8,26 @@
 
 ## 技能一览
 
-| 技能             | 命令                    | 职责                                                       |
-|------------------|-------------------------|------------------------------------------------------------|
-| 需求分析师       | `/dovelx-requirements`  | 澄清业务目标，拆解用户故事，输出结构化 PRD                |
-| 技术设计师       | `/dovelx-tech-design`   | 设计架构方案、API 契约、数据库 Schema，记录技术决策       |
-| 代码审查员       | `/dovelx-code-review`   | 多维度审查代码质量、安全性、性能与架构合规性              |
-| 专业审查团队     | `/dovelx-review-team`                 | 三个并行 Agent 协作，覆盖需求完整性、代码规范与安全性能   |
-| 开发团队编排     | `/dovelx-dev-team`      | 四阶段流水线：需求 → 技术设计 → 开发实现 → 代码审查       |
-| 端到端全栈工作流 | `/dovelx-all-stack`     | 九阶段全流程，内置挑战审查与逐阶用户授权门控机制          |
+**原子技能**（单独调用）：
+
+| 技能 | 命令 | 职责 |
+|------|------|------|
+| 需求分析师 | `/dovelx-requirements` | 澄清业务目标，拆解用户故事，输出结构化 PRD |
+| 技术设计师 | `/dovelx-tech-design` | 设计架构方案、API 契约、数据库 Schema，记录技术决策 |
+| 代码审查员 | `/dovelx-code-review` | 多维度审查代码质量、安全性、性能与架构合规性 |
+| 需求文档审查 | `/dovelx-requirement-review` | 从五个维度审查 PRD 的完整性与合理性 |
+| 代码重构审查 | `/dovelx-restruct-reviewer` | 审查重构质量，确保行为不变 |
+| Bug 诊断修复 | `/dovelx-bug-resolver` | 系统化 Bug 诊断与修复 |
+| API 测试团队 | `/dovelx-qa-team` | 3 个并行 Agent：功能测试、安全测试（OWASP）、压力测试 + E2E |
+| 知识问答 | `/dovelx-ask` | 自然语言检索项目文档、代码库、数据库结构 |
+
+**编排技能**（多 Agent 协作）：
+
+| 技能 | 命令 | 职责 |
+|------|------|------|
+| 专业审查团队 | `/dovelx-review-team` | 三个并行 Agent 覆盖需求完整性、代码规范与安全性能 |
+| 开发团队编排 | `/dovelx-dev-team` | 四阶段流水线：需求 → 技术设计 → 开发实现 → 代码审查 |
+| 端到端全栈工作流 | `/dovelx-all-stack` | 九阶段全流程，内置挑战审查与逐阶用户授权门控机制 |
 
 ---
 
@@ -33,11 +45,9 @@
 
 ## 安装前提
 
-本技能包的**审查团队**与**开发团队编排**功能会派发多个并行 Agent，需要确保以下环境变量已正确配置：
+**审查团队**、**开发团队编排**、**全栈工作流**、**API 测试团队**与**知识问答**技能会派发多个并行 Agent，需完成以下配置。
 
-本技能包的**审查团队**与**开发团队编排**功能依赖 Claude Code 的多 Agent 并行能力，安装前需完成以下两项配置。
-
-### 1. 启用 Agent Team 功能
+### 启用 Agent Team 功能
 
 在 `~/.claude/settings.json` 的 `env` 字段中添加：
 
@@ -49,25 +59,13 @@
 }
 ```
 
-或在终端中临时启用：
-
-```bash
-export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
-```
-
-### 2. 配置 Claude API 密钥
-
-```bash
-export ANTHROPIC_API_KEY="sk-ant-..."
-```
-
 > **Windows 用户** 使用 PowerShell：
 > ```powershell
 > $env:CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1"
 > $env:ANTHROPIC_API_KEY = "sk-ant-..."
 > ```
 
-**未完成以上配置时，并行 Agent 功能将无法启动。** 单独调用 `/dovelx-requirements`、`/dovelx-tech-design`、`/dovelx-code-review` 不受影响。
+**未完成以上配置时，并行 Agent 功能将无法启动。** 单独调用 `/dovelx-requirements`、`/dovelx-tech-design`、`/dovelx-code-review` 等原子技能不受影响。
 
 ---
 
@@ -95,7 +93,9 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 /dovelx-tech-design    ← 只做技术设计
 /dovelx-code-review    ← 只做代码审查
 /dovelx-dev-team       ← 四阶段开发编排
-/dovelx-review-team    ← 多维度多agent并行审查
+/dovelx-review-team    ← 多维度多 Agent 并行审查
+/dovelx-qa-team        ← API 接口与安全压力测试
+/dovelx-ask            ← 对话式知识问答
 ```
 
 所有输出文档统一使用中文撰写。
@@ -104,4 +104,4 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 
 ## 许可证
 
-MIT © 2026 [WangZhenLx](https://github.com/WangZhenLx)
+MIT © 2026 [DoveXiaZi](https://github.com/DoveXiaZi)

@@ -1,20 +1,12 @@
-# 示例输入
+请审查以下积分发放服务代码：
 
-请审查以下任务创建 API 的实现代码：
-
-```typescript
-// app/api/tasks/route.ts
-import { db } from '@/lib/db'
-
-export async function POST(req: Request) {
-  const body = await req.json()
-
-  const task = await db.query(
-    `INSERT INTO tasks (user_id, title, priority, due_date)
-     VALUES ('${body.userId}', '${body.title}', ${body.priority}, '${body.dueDate}')
-     RETURNING *`
-  )
-
-  return Response.json(task.rows[0])
-}
+```python
+class PointService:
+    def award_points(self, user_id, task_id, points):
+        user = db.query(f"SELECT * FROM users WHERE id = {user_id}")
+        if not user:
+            return False
+        db.execute(f"UPDATE users SET points = points + {points} WHERE id = {user_id}")
+        db.execute(f"INSERT INTO point_logs VALUES ({user_id}, {task_id}, {points}, NOW())")
+        return True
 ```

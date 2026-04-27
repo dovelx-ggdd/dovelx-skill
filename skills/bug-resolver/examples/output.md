@@ -1,84 +1,31 @@
-# 示例输出：Bug 诊断报告
+## Bug 诊断报告
 
----
+### 根因
 
-## 信息收集
+兑换流程缺少幂等保护，并发请求同时通过余额校验后均执行扣减：
 
-**已知事实：**
-- 后端 API 返回 200，数据库已更新
-- 前端界面不更新，刷新后正常
-- `handleComplete` 函数调用了 PATCH 接口
-
-**缺失信息（提问用户确认）：**
-1. 任务列表数据如何获取？（SWR / React Query / useState 本地状态？）
-2. `handleComplete` 调用后有没有触发数据重新获取？
-
----
-
-## 根因分析
-
-**假设：** `handleComplete` 完成 API 调用后，**没有通知前端状态层刷新数据**，界面仍显示旧状态。
-
-**验证：** 代码中 `await fetch(...)` 后没有任何触发 re-render 的逻辑，假设成立。
-
----
-
-## 修复方案
-
-### 方案一：SWR（推荐）
-
-```typescript
-import useSWR from 'swr'
-
-// 在列表组件中
-const { data: tasks, mutate } = useSWR('/api/tasks', fetcher)
-
-// 在 TaskCard 中
-const handleComplete = async (taskId: string) => {
-  await fetch(`/api/tasks/${taskId}`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ status: 2 }),
-  })
-  // 通知 SWR 重新获取数据
-  mutate()
-}
+```
+请求 A: SELECT balance=100 → 校验通过 → UPDATE balance=50  ✅
+请求 B: SELECT balance=100 → 校验通过 → UPDATE balance=50  ❌ 重复扣减
 ```
 
-### 方案二：乐观更新（更流畅的用户体验）
+PostgreSQL 默认读已提交隔离级别，两个并发 SELECT 均读到旧值。
 
-```typescript
-const handleComplete = async (taskId: string) => {
-  // 先乐观地更新本地状态
-  mutate(
-    tasks?.map(t => t.id === taskId ? { ...t, status: 2 } : t),
-    false  // 不立即重新验证
-  )
+### 修复方案（推荐）
 
-  try {
-    await fetch(`/api/tasks/${taskId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: 2 }),
-    })
-    mutate()  // 成功后同步服务端数据
-  } catch {
-    mutate()  // 失败时回滚
-  }
-}
+```sql
+-- redeem_orders 加唯一约束
+ALTER TABLE redeem_orders ADD CONSTRAINT uq_order UNIQUE (order_id);
 ```
 
----
+```python
+try:
+    db.execute("INSERT INTO redeem_orders ...")
+    db.execute("UPDATE point_accounts SET balance = balance - %s WHERE user_id = %s AND balance >= %s")
+except UniqueViolation:
+    return {"status": "already_processed"}
+```
 
-## 附带发现
+### 验证步骤
 
-`fetch` 调用缺少 `Content-Type: application/json` 请求头，部分服务器可能无法正确解析 body，建议同步修复。
-
----
-
-## 验证步骤
-
-1. 应用修复
-2. 点击「标记完成」
-3. 确认界面立即更新，无需刷新
-4. 刷新后确认状态持久化正常
+用并发测试工具向同一 `order_id` 发送 10 个并发请求，确认只有 1 次扣减成功，其余返回 `already_processed`。

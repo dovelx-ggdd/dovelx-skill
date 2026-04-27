@@ -1,17 +1,8 @@
-# 示例输入
+积分兑换接口出现 Bug：并发调用兑换接口时，偶发积分被重复扣减，但礼品只发了一份。
 
-用户描述：
+错误日志：
+```
+[WARN] Points deducted twice for user_id=1042, order_id=REQ-889
+```
 
-> 我的任务列表页面有个 bug，点击「标记完成」按钮后，任务状态在界面上没有变化，需要刷新页面才能看到更新。
-> 后端 API 是正常的（直接调用 API 返回 200），但前端没有更新。
->
-> 相关代码：
-> ```typescript
-> // TaskCard.tsx
-> const handleComplete = async (taskId: string) => {
->   await fetch(`/api/tasks/${taskId}`, {
->     method: 'PATCH',
->     body: JSON.stringify({ status: 2 }),
->   })
-> }
-> ```
+技术栈：Python + PostgreSQL

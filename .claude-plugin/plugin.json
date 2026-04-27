@@ -4,10 +4,10 @@
   "version": "1.3.0",
   "author": {
     "name": "WangZhen",
-    "url": "https://github.com/WangZhenLx"
+    "url": "https://github.com/DoveXiaZi"
   },
-  "homepage": "https://github.com/WangZhenLx/dovelx-skill",
-  "repository": "https://github.com/WangZhenLx/dovelx-skill",
+  "homepage": "https://github.com/DoveXiaZi/dovelx-skill",
+  "repository": "https://github.com/DoveXiaZi/dovelx-skill",
   "license": "MIT",
   "skills": ["./skills/"],
   "agents": [
