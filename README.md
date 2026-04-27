@@ -76,7 +76,7 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 在 Claude Code 中执行：
 
 ```
-/plugin marketplace add WangZhenLx/dovelx-skill
+/plugin marketplace add DoveXiaZi/dovelx-skill
 /plugin install dovelx@dovelx-skill
 ```
 
