@@ -84,7 +84,8 @@ jobs:
 
             ### Cursor
 
-            在 [Cursor Marketplace](https://cursor.com/marketplace) 搜索 **dovelx**（上架后），或通过 [提交插件](https://cursor.com/marketplace/publish) 使用本仓库 URL。详见仓库 README。
+            **推荐：** 按仓库 [`README.md`](README.md) 将本仓库放入 **`~/.cursor/plugins/local`**（可用符号链接），重启或 Reload Window。  
+            **可选：** [Cursor Marketplace](https://cursor.com/marketplace) 上架后搜索 **dovelx**，或通过 [提交插件](https://cursor.com/marketplace/publish) 提交仓库 URL。
 
             完整变更记录见 [CHANGELOG.md](CHANGELOG.md)
           draft: false

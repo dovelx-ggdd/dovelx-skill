@@ -86,12 +86,30 @@ Cursor **不使用** `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`。编排类技能依
 /plugin install dovelx@dovelx-skill
 ```
 
-### Cursor
+### Cursor（本地插件目录，推荐）
 
-1. **市场安装（上架后）**：打开 Cursor → Marketplace / 插件，搜索 **dovelx** 并按提示安装。首次上架需在 [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish) 提交本仓库公开 URL，由 Cursor 团队审核。
-2. **本地调试**：将包含 `.cursor-plugin/plugin.json` 的本仓库作为 Cursor 插件加载（参见 [Cursor 插件文档](https://cursor.com/docs/plugins)）后，在项目中验证 skills 与 agents 是否正常解析。
+仓库根目录已包含 [`.cursor-plugin/plugin.json`](.cursor-plugin/plugin.json)。Cursor 会从用户配置目录下的 **`plugins/local`** 加载本地插件；官方亦推荐用**符号链接**指向插件仓库以便更新后无需复制文件（参见 [Cursor Plugins — Test plugins locally](https://cursor.com/docs/plugins)）。
 
-在 Cursor Agent 对话中输入 **`/`**，搜索技能 **`dovelx-…`**（与各 `SKILL.md` 中 `name` 字段一致）即可手动唤起技能；行为与 Claude Code 下的 **`/dovelx-*` 斜杠命令** 相近但不完全相同。
+1. **克隆本仓库**到本机任意路径，记为 `<REPO_ROOT>`（须为包含 `.cursor-plugin/` 的仓库根目录）。
+2. **放入本地插件目录**（二选一）：
+   - **符号链接（推荐）**：仓库仍在原路径，`git pull` 后重启或重载窗口即可用新版本。
+     - **macOS / Linux**
+       ```bash
+       mkdir -p ~/.cursor/plugins/local
+       ln -snf "<REPO_ROOT>" ~/.cursor/plugins/local/dovelx-skill
+       ```
+     - **Windows**（目录联接 `mklink /J`，通常不需管理员提升；请将 `<REPO_ROOT>` 改为你的绝对路径，例如 `E:\work-space\dovelx-skill`）
+       ```powershell
+       $local = Join-Path $env:USERPROFILE ".cursor\plugins\local"
+       New-Item -ItemType Directory -Force -Path $local | Out-Null
+       cmd /c mklink /J "$local\dovelx-skill" "<REPO_ROOT>"
+       ```
+       若提示「文件已存在」，请先删除 `%USERPROFILE%\.cursor\plugins\local\dovelx-skill` 再执行联接命令。
+   - **复制**：将整个仓库文件夹复制到 `%USERPROFILE%\.cursor\plugins\local\dovelx-skill`（更新需重新复制）。
+3. **重启 Cursor**，或在命令面板执行 **Developer: Reload Window**，使插件生效。
+4. 打开任意工作区，在 **Agent** 对话中输入 **`/`**，搜索 **`dovelx-…`**（与各 `SKILL.md` 中 `name` 一致）即可唤起技能。
+
+**可选**：若日后已在 [Cursor Marketplace](https://cursor.com/marketplace) 上架，也可在应用内搜索 **dovelx** 安装；未上架时以上本地目录方式即可完整使用 skills 与 agents。
 
 ---
 

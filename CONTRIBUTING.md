@@ -34,7 +34,9 @@ cd dovelx-skill
 /plugin install dovelx@./
 ```
 
-**Cursor：** 在 Cursor 中以插件形式加载包含 `.cursor-plugin/plugin.json` 的本仓库目录，详见 [Cursor Plugins](https://cursor.com/docs/plugins)。清单与 Agent 路径的自动化校验可执行：
+**Cursor（本地插件目录）：** 与终端用户相同——将本仓库根目录通过**符号链接**放入 `~/.cursor/plugins/local/dovelx-skill`（Windows 可用 `mklink /J`，详见仓库 [`README.md`](README.md)「Cursor（本地插件目录）」），然后 **Reload Window**。详见 [Cursor Plugins](https://cursor.com/docs/plugins)。
+
+清单与 Agent 路径的自动化校验：
 
 ```bash
 chmod +x scripts/smoke-check-manifests.sh
@@ -188,7 +190,7 @@ git push origin v1.3.0
 ```
 
 5. GitHub Actions 会自动创建 Release 并生成 Release Notes  
-6. **Cursor 市场上架**：若尚未上架或更新说明，在 [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish) 使用仓库 URL 提交审核（以 Cursor 官方流程为准）
+6. **Cursor**：用户使用 **`README.md` 中的本地插件目录**（`~/.cursor/plugins/local` + 符号链接）即可安装任意 tag / main；若要上架应用商店，再在 [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish) 提交仓库 URL（以 Cursor 官方流程为准）
 
 ---
 
