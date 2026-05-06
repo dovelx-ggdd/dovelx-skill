@@ -2,7 +2,7 @@
 
 > 将 AI 融入开发流程的每一个环节——从需求到上线，每一步都有迹可循。
 
-`dovelx-skill` 是一套为 [Claude Code](https://claude.ai/code) 设计的专业技能包，将需求分析、技术设计、代码审查与全栈工作流封装为可直接调用的 AI 角色，帮助独立开发者和小型团队以工程化的方式驱动 AI 完成完整的软件开发生命周期。
+`dovelx-skill` 是一套专业技能包，面向 [Claude Code](https://claude.ai/code) 与 [Cursor](https://cursor.com) Agent Skills / 插件市场，将需求分析、技术设计、代码审查与全栈工作流封装为可调用的 AI 角色，帮助独立开发者和小型团队以工程化方式驱动完整的软件开发生命周期。
 
 ---
 
@@ -45,9 +45,9 @@
 
 ## 安装前提
 
-**审查团队**、**开发团队编排**、**全栈工作流**、**API 测试团队**与**知识问答**技能会派发多个并行 Agent，需完成以下配置。
+**审查团队**、**开发团队编排**、**全栈工作流**、**API 测试团队**与**知识问答**技能会派发多个并行 Agent 或子 Agent，不同产品的配置如下。
 
-### 启用 Agent Team 功能
+### Claude Code：启用 Agent Team
 
 在 `~/.claude/settings.json` 的 `env` 字段中添加：
 
@@ -65,24 +65,39 @@
 > $env:ANTHROPIC_API_KEY = "sk-ant-..."
 > ```
 
-**未完成以上配置时，并行 Agent 功能将无法启动。** 单独调用 `/dovelx-requirements`、`/dovelx-tech-design`、`/dovelx-code-review` 等原子技能不受影响。
+**未完成以上配置时，Claude Code 侧并行 Agent 团队将无法启动。** 单独调用 `/dovelx-requirements`、`/dovelx-tech-design`、`/dovelx-code-review` 等原子技能不受影响。
+
+### Cursor：多 Agent / Subagents
+
+Cursor **不使用** `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`。编排类技能依赖 Cursor 对 Subagents 与并行任务的支持；若行为与预期不符，请在 Cursor Agent 中针对对应技能做一次实测。
+
+> **Remote Rule (GitHub)**（设置 → Rules → 添加远程规则）仅适合导入远程规则类内容，**不等价于**安装完整插件（skills、agents、manifest 等打包能力请以 Cursor 插件为准）。
 
 ---
 
 ## 安装
 
-在 Claude Code 中执行：
+### Claude Code
+
+在终端或 Claude Code 中执行：
 
 ```
 /plugin marketplace add DoveXiaZi/dovelx-skill
 /plugin install dovelx@dovelx-skill
 ```
 
+### Cursor
+
+1. **市场安装（上架后）**：打开 Cursor → Marketplace / 插件，搜索 **dovelx** 并按提示安装。首次上架需在 [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish) 提交本仓库公开 URL，由 Cursor 团队审核。
+2. **本地调试**：将包含 `.cursor-plugin/plugin.json` 的本仓库作为 Cursor 插件加载（参见 [Cursor 插件文档](https://cursor.com/docs/plugins)）后，在项目中验证 skills 与 agents 是否正常解析。
+
+在 Cursor Agent 对话中输入 **`/`**，搜索技能 **`dovelx-…`**（与各 `SKILL.md` 中 `name` 字段一致）即可手动唤起技能；行为与 Claude Code 下的 **`/dovelx-*` 斜杠命令** 相近但不完全相同。
+
 ---
 
 ## 快速开始
 
-描述你的需求，或直接调用对应命令：
+描述你的需求，或在 Claude Code 中直接调用对应命令（Cursor 用户可用 **`/`** 搜索同名技能）：
 
 ```
 # 完整流程（推荐）

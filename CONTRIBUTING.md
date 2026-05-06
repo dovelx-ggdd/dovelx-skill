@@ -19,8 +19,9 @@
 
 **前置要求：**
 
-- [Claude Code](https://claude.ai/code) CLI 已安装
 - Git
+- 调试 **Claude Code**：需安装 [Claude Code](https://claude.ai/code) CLI
+- 调试 **Cursor**：需安装 [Cursor](https://cursor.com)，并按官方文档加载本地插件或仓库
 
 **本地安装插件（用于调试）：**
 
@@ -29,8 +30,15 @@
 git clone https://github.com/DoveXiaZi/dovelx-skill.git
 cd dovelx-skill
 
-# 从本地路径安装（开发模式）
+# Claude Code：从本地路径安装（开发模式）
 /plugin install dovelx@./
+```
+
+**Cursor：** 在 Cursor 中以插件形式加载包含 `.cursor-plugin/plugin.json` 的本仓库目录，详见 [Cursor Plugins](https://cursor.com/docs/plugins)。清单与 Agent 路径的自动化校验可执行：
+
+```bash
+chmod +x scripts/smoke-check-manifests.sh
+bash scripts/smoke-check-manifests.sh
 ```
 
 ---
@@ -97,7 +105,7 @@ bash scripts/validate-skills.sh
 
 ### 5. 无需注册
 
-`plugin.json` 已配置自动扫描 `skills/` 目录，新增目录后无需手动注册。
+`.claude-plugin/plugin.json` 与 `.cursor-plugin/plugin.json` 均已配置扫描 `./skills/`；新增技能目录后通常无需改清单（若在 Cursor / Claude 中未被拾取，再核对清单路径）。
 
 ---
 
@@ -105,12 +113,14 @@ bash scripts/validate-skills.sh
 
 - **保持向后兼容**：不要删除已有字段，只新增或完善
 - **更新示例**：若行为变更，同步更新 `examples/output.md`
-- **版本号**：修改技能后需在 `plugin.json` 和 `marketplace.json` 中递增版本号
+- **版本号**：修改技能后需同步递增 **四套** 版本字段——`.claude-plugin/plugin.json`、`.claude-plugin/marketplace.json` 的 `metadata.version`、`.cursor-plugin/plugin.json`、`.cursor-plugin/marketplace.json` 的 `metadata.version`（须保持一致）
 - **CHANGELOG**：在 `CHANGELOG.md` 中记录变更内容
 
 ---
 
 ## 调试技能
+
+**Claude Code：**
 
 ```bash
 # 重新加载插件（修改后需要）
@@ -121,6 +131,16 @@ bash scripts/validate-skills.sh
 
 # 查看已注册技能列表
 /plugin list
+```
+
+**Cursor：** 在 Agent 输入 **`/`**，搜索 `dovelx-<skill-name>`（与 `SKILL.md` 中 `name` 一致）；修改插件内容后按 Cursor 文档重新加载插件。建议在装载插件后确认编排技能所依赖的子 Agent 是否按预期出现（`agents/*.md` 中若有 Claude 专有 frontmatter 字段，应以 Cursor 内实测为准）。
+
+### Cursor / 清单冒烟（推荐发 PR 前）
+
+```bash
+chmod +x scripts/smoke-check-manifests.sh
+bash scripts/smoke-check-manifests.sh
+bash scripts/validate-skills.sh
 ```
 
 ---
@@ -153,17 +173,22 @@ docs: add examples for all skills
 
 ## 发版流程
 
-1. 更新 `plugin.json` 和 `marketplace.json` 中的 `version` 字段
+1. 同步更新以下位置的 **`version` / `metadata.version`**（须完全一致）：
+   - `.claude-plugin/plugin.json`
+   - `.claude-plugin/marketplace.json` → `metadata.version`
+   - `.cursor-plugin/plugin.json`
+   - `.cursor-plugin/marketplace.json` → `metadata.version`
 2. 在 `CHANGELOG.md` 顶部添加新版本条目
 3. 提交并推送到 `main` 分支
-4. 创建 Git tag：
+4. 创建 Git tag（与 `plugin.json` 中的版本一致，带 `v` 前缀）：
 
 ```bash
-git tag v1.0.7
-git push origin v1.0.7
+git tag v1.3.0
+git push origin v1.3.0
 ```
 
-5. GitHub Actions 会自动创建 Release 并生成 Release Notes
+5. GitHub Actions 会自动创建 Release 并生成 Release Notes  
+6. **Cursor 市场上架**：若尚未上架或更新说明，在 [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish) 使用仓库 URL 提交审核（以 Cursor 官方流程为准）
 
 ---
 

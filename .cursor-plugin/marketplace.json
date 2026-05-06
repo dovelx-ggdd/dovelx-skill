@@ -14,7 +14,7 @@
       "source": "./",
       "description": "DoveLx 个人开发 Agent 团队技能包，包含需求分析、技术设计、代码审查、审查团队、Bug 排查、QA 测试、全栈工作流、对话式知识问答",
       "category": "workflow",
-      "tags": ["skills", "code-review", "tech-design", "requirements", "full-stack", "workflow"]
+      "tags": ["skills", "code-review", "tech-design", "requirements", "full-stack", "workflow", "cursor"]
     }
   ]
 }

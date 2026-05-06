@@ -30,14 +30,19 @@ jobs:
 
       - name: 校验版本号一致性
         run: |
-          PLUGIN_VER=$(jq -r '.version' .claude-plugin/plugin.json)
+          CLAUDE_VER=$(jq -r '.version' .claude-plugin/plugin.json)
+          CURSOR_VER=$(jq -r '.version' .cursor-plugin/plugin.json)
           TAG_VER="${{ steps.version.outputs.version }}"
 
-          if [ "$PLUGIN_VER" != "$TAG_VER" ]; then
-            echo "ERROR: tag 版本 ($TAG_VER) 与 plugin.json 版本 ($PLUGIN_VER) 不一致"
+          if [ "$CLAUDE_VER" != "$TAG_VER" ]; then
+            echo "ERROR: tag 版本 ($TAG_VER) 与 .claude-plugin/plugin.json ($CLAUDE_VER) 不一致"
             exit 1
           fi
-          echo "版本校验通过: $PLUGIN_VER"
+          if [ "$CURSOR_VER" != "$TAG_VER" ]; then
+            echo "ERROR: tag 版本 ($TAG_VER) 与 .cursor-plugin/plugin.json ($CURSOR_VER) 不一致"
+            exit 1
+          fi
+          echo "版本校验通过: $TAG_VER"
 
       - name: 从 CHANGELOG.md 提取发版说明
         id: changelog
@@ -70,12 +75,16 @@ jobs:
 
             ---
 
-            ### 安装 / 更新
+            ### 安装 / 更新（Claude Code）
 
             ```
             /plugin marketplace add DoveXiaZi/dovelx-skill
             /plugin install dovelx@dovelx-skill
             ```
+
+            ### Cursor
+
+            在 [Cursor Marketplace](https://cursor.com/marketplace) 搜索 **dovelx**（上架后），或通过 [提交插件](https://cursor.com/marketplace/publish) 使用本仓库 URL。详见仓库 README。
 
             完整变更记录见 [CHANGELOG.md](CHANGELOG.md)
           draft: false

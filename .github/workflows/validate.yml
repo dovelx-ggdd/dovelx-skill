@@ -6,12 +6,14 @@ on:
     paths:
       - 'skills/**'
       - '.claude-plugin/**'
+      - '.cursor-plugin/**'
       - 'scripts/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'skills/**'
       - '.claude-plugin/**'
+      - '.cursor-plugin/**'
       - 'scripts/**'
 
 jobs:
@@ -30,34 +32,74 @@ jobs:
         run: bash scripts/validate-skills.sh
 
   validate-plugin-json:
-    name: 验证 plugin.json 格式
+    name: 验证 Claude / Cursor plugin.json
     runs-on: ubuntu-latest
 
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
 
-      - name: 校验 plugin.json
+      - name: 校验 Claude plugin.json
         run: |
-          echo "检查 plugin.json 必填字段..."
+          echo "检查 .claude-plugin/plugin.json 必填字段..."
           for field in name description version author skills; do
             if ! jq -e ".$field" .claude-plugin/plugin.json > /dev/null 2>&1; then
-              echo "ERROR: plugin.json 缺少字段: $field"
+              echo "ERROR: .claude-plugin/plugin.json 缺少字段: $field"
               exit 1
             fi
           done
-          echo "plugin.json 验证通过"
+          echo ".claude-plugin/plugin.json 验证通过"
 
-      - name: 校验 marketplace.json
+      - name: 校验 Claude marketplace.json
         run: |
-          echo "检查 marketplace.json 必填字段..."
+          echo "检查 .claude-plugin/marketplace.json 必填字段..."
           for field in name owner metadata plugins; do
             if ! jq -e ".$field" .claude-plugin/marketplace.json > /dev/null 2>&1; then
-              echo "ERROR: marketplace.json 缺少字段: $field"
+              echo "ERROR: .claude-plugin/marketplace.json 缺少字段: $field"
               exit 1
             fi
           done
-          echo "marketplace.json 验证通过"
+          echo ".claude-plugin/marketplace.json 验证通过"
+
+      - name: 校验 Cursor plugin.json
+        run: |
+          echo "检查 .cursor-plugin/plugin.json 必填字段..."
+          for field in name description version author skills agents; do
+            if ! jq -e ".$field" .cursor-plugin/plugin.json > /dev/null 2>&1; then
+              echo "ERROR: .cursor-plugin/plugin.json 缺少字段: $field"
+              exit 1
+            fi
+          done
+          agents_len=$(jq '.agents | length' .cursor-plugin/plugin.json)
+          if [ "$agents_len" -eq 0 ]; then
+            echo "ERROR: .cursor-plugin/plugin.json 中 agents 不能为空"
+            exit 1
+          fi
+          echo ".cursor-plugin/plugin.json 验证通过"
+
+      - name: 校验 Cursor marketplace.json
+        run: |
+          echo "检查 .cursor-plugin/marketplace.json 必填字段..."
+          for field in name owner metadata plugins; do
+            if ! jq -e ".$field" .cursor-plugin/marketplace.json > /dev/null 2>&1; then
+              echo "ERROR: .cursor-plugin/marketplace.json 缺少字段: $field"
+              exit 1
+            fi
+          done
+          echo ".cursor-plugin/marketplace.json 验证通过"
+
+      - name: 校验 manifest 中的 agent 路径存在
+        run: |
+          echo "检查 Cursor plugin.json 中 agents 路径..."
+          root="$(pwd)"
+          while IFS= read -r rel; do
+            path="$root/${rel#./}"
+            if [ ! -f "$path" ]; then
+              echo "ERROR: agent 文件不存在: $rel -> $path"
+              exit 1
+            fi
+          done < <(jq -r '.agents[]' .cursor-plugin/plugin.json)
+          echo "所有 agent 路径存在"
 
   check-version-sync:
     name: 检查版本号一致性
@@ -69,15 +111,29 @@ jobs:
 
       - name: 对比版本号
         run: |
-          PLUGIN_VER=$(jq -r '.version' .claude-plugin/plugin.json)
-          MARKET_VER=$(jq -r '.metadata.version' .claude-plugin/marketplace.json)
+          CLAUDE_PLUGIN_VER=$(jq -r '.version' .claude-plugin/plugin.json)
+          CLAUDE_MARKET_VER=$(jq -r '.metadata.version' .claude-plugin/marketplace.json)
+          CURSOR_PLUGIN_VER=$(jq -r '.version' .cursor-plugin/plugin.json)
+          CURSOR_MARKET_VER=$(jq -r '.metadata.version' .cursor-plugin/marketplace.json)
 
-          echo "plugin.json 版本: $PLUGIN_VER"
-          echo "marketplace.json 版本: $MARKET_VER"
+          echo "Claude plugin.json 版本: $CLAUDE_PLUGIN_VER"
+          echo "Claude marketplace.json 版本: $CLAUDE_MARKET_VER"
+          echo "Cursor plugin.json 版本: $CURSOR_PLUGIN_VER"
+          echo "Cursor marketplace.json 版本: $CURSOR_MARKET_VER"
 
-          if [ "$PLUGIN_VER" != "$MARKET_VER" ]; then
-            echo "ERROR: 版本号不一致！plugin.json=$PLUGIN_VER, marketplace.json=$MARKET_VER"
+          if [ "$CLAUDE_PLUGIN_VER" != "$CLAUDE_MARKET_VER" ]; then
+            echo "ERROR: Claude 版本不一致！plugin.json=$CLAUDE_PLUGIN_VER, marketplace.json=$CLAUDE_MARKET_VER"
             exit 1
           fi
 
-          echo "版本号一致: $PLUGIN_VER"
+          if [ "$CURSOR_PLUGIN_VER" != "$CURSOR_MARKET_VER" ]; then
+            echo "ERROR: Cursor 版本不一致！plugin.json=$CURSOR_PLUGIN_VER, marketplace.json=$CURSOR_MARKET_VER"
+            exit 1
+          fi
+
+          if [ "$CLAUDE_PLUGIN_VER" != "$CURSOR_PLUGIN_VER" ]; then
+            echo "ERROR: Claude 与 Cursor plugin.json 版本不一致！claude=$CLAUDE_PLUGIN_VER, cursor=$CURSOR_PLUGIN_VER"
+            exit 1
+          fi
+
+          echo "版本号一致: $CLAUDE_PLUGIN_VER"
