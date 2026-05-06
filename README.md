@@ -109,6 +109,8 @@ Cursor **不使用** `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`。编排类技能依
 3. **重启 Cursor**，或在命令面板执行 **Developer: Reload Window**，使插件生效。
 4. 打开任意工作区，在 **Agent** 对话中输入 **`/`**，搜索 **`dovelx-…`**（与各 `SKILL.md` 中 `name` 一致）即可唤起技能。
 
+**若已联接但仍看不到技能**：请在 **Cursor 设置 → Rules → Agent Decides** 中确认技能列表；并确认每个技能目录名与对应 `SKILL.md` 的 **`name` 字段完全一致**（Cursor [Skills 文档](https://cursor.com/docs/skills.md) 要求如此），否则插件目录即使放在 `plugins/local` 也可能加载失败。
+
 **可选**：若日后已在 [Cursor Marketplace](https://cursor.com/marketplace) 上架，也可在应用内搜索 **dovelx** 安装；未上架时以上本地目录方式即可完整使用 skills 与 agents。
 
 ---

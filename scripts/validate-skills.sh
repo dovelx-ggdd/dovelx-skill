@@ -48,6 +48,11 @@ for skill_dir in "$SKILLS_DIR"/*/; do
       echo -e "  ${RED}[ERROR]${RESET} name 必须以 'dovelx-' 开头，当前值: ${name_val}"
       ERRORS=$((ERRORS + 1))
     fi
+    # Cursor Agent Skills：父目录名必须与 frontmatter name 一致，否则本地插件内技能可能无法被发现
+    if [[ "$name_val" != "$skill_name" ]]; then
+      echo -e "  ${RED}[ERROR]${RESET} 目录名必须与 frontmatter name 一致（Cursor 要求）: 目录=${skill_name}, name=${name_val}"
+      ERRORS=$((ERRORS + 1))
+    fi
   fi
 
   if ! grep -q "^description:" "$skill_file"; then
