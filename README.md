@@ -20,6 +20,7 @@
 | Bug 诊断修复 | `/dovelx-bug-resolver` | 系统化 Bug 诊断与修复 |
 | API 测试团队 | `/dovelx-qa-team` | 3 个并行 Agent：功能测试、安全测试（OWASP）、压力测试 + E2E |
 | 知识问答 | `/dovelx-ask` | 自然语言检索项目文档、代码库、数据库结构 |
+| 项目初始化 | `/dovelx-init` | 生成 `PROJECT.md` 项目画像，并可选接入 Cursor Rules / Hooks |
 
 **编排技能**（多 Agent 协作）：
 
@@ -131,6 +132,7 @@ Cursor **不使用** `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`。编排类技能依
 /dovelx-review-team    ← 多维度多 Agent 并行审查
 /dovelx-qa-team        ← API 接口与安全压力测试
 /dovelx-ask            ← 对话式知识问答
+/dovelx-init           ← 初始化项目画像 PROJECT.md（含 Cursor 规则可选）
 ```
 
 所有输出文档统一使用中文撰写。
