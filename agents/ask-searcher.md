@@ -30,7 +30,7 @@ tools: [Read, Glob, Grep]
 | `docs` | `*.md`, `*.txt`, `*.rst`, `*.adoc` | 标题、段落、列表、说明文字 |
 | `code` | `*.ts`, `*.js`, `*.py`, `*.go`, `*.java`, `*.rs`, `*.rb`, `*.php` 等 | 函数名、类名、注释、接口定义 |
 | `data` | `*.json`, `*.yaml`, `*.yml`, `*.csv`, `*.sql`, `*schema*`, `*migration*` | 字段名、表名、键名、枚举值 |
-| `knowledge` | `.claude/doc/**`, `knowledge/**`, `wiki/**`, `kb/**` | 任何文本内容 |
+| `knowledge` | `doc/**`, `knowledge/**`, `wiki/**`, `kb/**` | 任何文本内容 |
 
 ### Step 2：多轮搜索
 

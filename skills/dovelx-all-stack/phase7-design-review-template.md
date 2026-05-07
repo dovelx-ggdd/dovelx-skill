@@ -1,6 +1,6 @@
 # Phase 7 设计审查报告模板
 
-保存路径：`.claude/doc/<功能名>/phase7-design-review-<日期>.md`
+保存路径：`doc/<功能名>/phase7-design-review-<日期>.md`
 
 ```markdown
 # 设计审查报告：<功能名>

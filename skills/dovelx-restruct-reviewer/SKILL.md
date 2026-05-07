@@ -98,6 +98,6 @@ origin: dovelx
 
 1. **用户指定路径**：若用户明确指定，优先遵从
 2. **同目录保存**：若输入为文件路径，保存到同一目录，文件名为 `[原文件名]-restruct-review-[YYYY-MM-DD].md`
-3. **默认路径**：保存到 `.claude/doc/restruct-reviewer/code-review-[YYYY-MM-DD]-v1.md`，同日已有文件则版本号递增（v2、v3...）
+3. **默认路径**：保存到 `doc/restruct-reviewer/code-review-[YYYY-MM-DD]-v1.md`，同日已有文件则版本号递增（v2、v3...）
 
 保存完成后，告知用户完整保存路径。

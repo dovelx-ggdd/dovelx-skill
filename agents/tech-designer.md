@@ -47,7 +47,7 @@ tools: [Read, Write, Glob, Grep]
 
 ### Step 4：输出文档
 
-将技术设计文档保存至 `.claude/doc/<功能名>/design-<YYYY-MM-DD>-v<N>.md`，包含：
+将技术设计文档保存至 `doc/<功能名>/design-<YYYY-MM-DD>-v<N>.md`，包含：
 
 1. 技术栈说明
 2. 架构设计（含模块划分图或文字描述）

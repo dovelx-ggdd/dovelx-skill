@@ -17,7 +17,7 @@ tools: [Read, Write, Glob, Grep]
 
 ### Step 1：读取上下文
 
-1. 查找项目中的现有 PRD 文档（`.claude/doc/*/prd-*.md`）了解文档规范
+1. 查找项目中的现有 PRD 文档（`doc/*/prd-*.md`）了解文档规范
 2. 扫描项目结构，了解技术栈和已有功能
 
 ### Step 2：需求澄清
@@ -41,7 +41,7 @@ tools: [Read, Write, Glob, Grep]
 
 ### Step 3：输出 PRD
 
-将 PRD 保存至 `.claude/doc/<功能名>/prd-<YYYY-MM-DD>-v<N>.md`，包含：
+将 PRD 保存至 `doc/<功能名>/prd-<YYYY-MM-DD>-v<N>.md`，包含：
 
 1. 背景与目标（含成功指标）
 2. 用户故事（格式：作为…我希望…以便…）

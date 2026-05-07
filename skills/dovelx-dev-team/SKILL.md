@@ -32,7 +32,7 @@ dovelx-requirements  →  dovelx-tech-design  →  开发实现  →  dovelx-cod
 ### 阶段 1：需求分析
 
 **执行方式**：派发 `agents/requirements-analyst.md` 子 Agent  
-**产出**：PRD → `.claude/doc/<功能名>/prd-<日期>-v1.md`  
+**产出**：PRD → `doc/<功能名>/prd-<日期>-v1.md`  
 **门控**：用户确认 PRD 后才进入下一阶段
 
 > 也可直接调用 `/dovelx-requirements` 由用户主导交互式需求分析。
@@ -40,7 +40,7 @@ dovelx-requirements  →  dovelx-tech-design  →  开发实现  →  dovelx-cod
 ### 阶段 2：技术设计
 
 **执行方式**：派发 `agents/tech-designer.md` 子 Agent，输入为阶段 1 的 PRD 路径  
-**产出**：技术设计文档 → `.claude/doc/<功能名>/design-<日期>-v<N>.md`  
+**产出**：技术设计文档 → `doc/<功能名>/design-<日期>-v<N>.md`  
 **门控**：用户确认技术方案后才开始实现
 
 > 也可直接调用 `/dovelx-tech-design`。
@@ -53,7 +53,7 @@ dovelx-requirements  →  dovelx-tech-design  →  开发实现  →  dovelx-cod
 ### 阶段 4：代码审查
 
 **执行方式**：派发 `agents/code-reviewer.md` 子 Agent，输入为变更文件列表  
-**产出**：审查报告 → `.claude/doc/<功能名>/code-review-<日期>-v1.md`  
+**产出**：审查报告 → `doc/<功能名>/code-review-<日期>-v1.md`  
 **门控**：CRITICAL 问题全部修复后才能合并
 
 > 也可直接调用 `/dovelx-code-review`。
@@ -70,7 +70,7 @@ dovelx-requirements  →  dovelx-tech-design  →  开发实现  →  dovelx-cod
 ## 文档归档
 
 ```
-.claude/doc/<功能名>/
+doc/<功能名>/
 ├── design-<日期>-v1.md       # PRD（需求阶段）
 ├── design-<日期>-v2.md       # 技术方案（设计阶段，已有 v1 则顺延）
 └── code-review-<日期>-v1.md  # 审查报告（审查阶段）
@@ -80,13 +80,13 @@ dovelx-requirements  →  dovelx-tech-design  →  开发实现  →  dovelx-cod
 
 每个阶段输出文档前**必须**执行：
 
-1. **检查目录**：判断 `.claude/doc/<功能名>/` 是否存在
+1. **检查目录**：判断 `doc/<功能名>/` 是否存在
    - 已存在 → 直接使用，**不重新创建**
    - 不存在 → 创建目录
 2. **确定版本号**：查找目标目录下同类型同日期文件（`<类型>-<日期>-v*.md`）
    - 已有同类型文件 → 取最大版本号 +1
    - 无同类型文件 → 从 `v1` 开始
-3. **保存**：`.claude/doc/<功能名>/<文档类型>-<YYYY-MM-DD>-v<N>.md`
+3. **保存**：`doc/<功能名>/<文档类型>-<YYYY-MM-DD>-v<N>.md`
 
 ## 进度追踪
 

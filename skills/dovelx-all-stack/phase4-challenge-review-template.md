@@ -1,6 +1,6 @@
 # Phase 4 挑战审查报告模板
 
-保存路径：`.claude/doc/<功能名>/phase4-challenge-review-<日期>.md`
+保存路径：`doc/<功能名>/phase4-challenge-review-<日期>.md`
 
 ```markdown
 # 挑战审查报告：<功能名>

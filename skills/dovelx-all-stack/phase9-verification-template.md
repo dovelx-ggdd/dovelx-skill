@@ -1,6 +1,6 @@
 # Phase 9 验证报告模板
 
-保存路径：`.claude/doc/<功能名>/phase9-verification-<日期>.md`
+保存路径：`doc/<功能名>/phase9-verification-<日期>.md`
 
 ```markdown
 # 验证报告：<功能名>

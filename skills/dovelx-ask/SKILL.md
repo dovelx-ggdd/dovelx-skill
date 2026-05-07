@@ -47,7 +47,7 @@ Session 初始化
 | 来源类型 | 扫描目标 | 说明 |
 |---------|---------|------|
 | **文档** | `**/*.md`, `**/*.txt`, `**/*.rst`, `docs/`, `README*` | 项目文档、说明文件 |
-| **知识库** | `knowledge/`, `kb/`, `wiki/`, `.claude/doc/` | 积累的知识文档 |
+| **知识库** | `knowledge/`, `kb/`, `wiki/`, `doc/` | 积累的知识文档 |
 | **代码库** | `src/`, `lib/`, `app/`, `*.ts`, `*.py`, `*.go`, `*.java` 等 | 源码文件 |
 | **结构化数据** | `**/*.json`, `**/*.yaml`, `**/*.yml`, `**/*.csv`, `**/*.sql`, `*schema*`, `*migration*` | 配置、数据模型、Schema |
 | **外部来源** | WebSearch / WebFetch（如可用） | 网络检索 |
@@ -59,7 +59,7 @@ Session 初始化
 
 已发现以下可搜索来源：
   📄 文档     — <N> 个文件（docs/, *.md 等）
-  🧠 知识库   — <N> 个文件（.claude/doc/ 等）
+  🧠 知识库   — <N> 个文件（doc/ 等）
   💻 代码库   — <N> 个文件（src/, lib/ 等）
   🗄️  结构化数据 — <N> 个文件（*.json, *schema* 等）
 

@@ -100,9 +100,9 @@ origin: dovelx
 
 **文档保存规程：**
 1. 确定功能模块名（英文小写、连字符分隔，如 `user-api`）
-2. 检查 `.claude/doc/<功能名>/` 是否存在，不存在则创建
+2. 检查 `doc/<功能名>/` 是否存在，不存在则创建
 3. 查找 `test-report-<日期>-v*.md`，已有则版本 +1，无则从 `v1` 开始
-4. 保存到 `.claude/doc/<功能名>/test-report-<YYYY-MM-DD>-v<N>.md`
+4. 保存到 `doc/<功能名>/test-report-<YYYY-MM-DD>-v<N>.md`
 
 ---
 

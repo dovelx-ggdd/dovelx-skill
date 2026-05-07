@@ -1,6 +1,6 @@
 # Phase 5 方案选型记录模板
 
-保存路径：`.claude/doc/<功能名>/phase5-solution-<日期>.md`
+保存路径：`doc/<功能名>/phase5-solution-<日期>.md`
 
 ```markdown
 # 方案选型记录：<功能名>

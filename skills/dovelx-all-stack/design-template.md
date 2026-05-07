@@ -1,6 +1,6 @@
 # design.md 模板
 
-生成设计文档时使用此模板。路径：`.claude/doc/<功能名>/design-<日期>-v1.md`
+生成设计文档时使用此模板。路径：`doc/<功能名>/design-<日期>-v1.md`
 
 ```markdown
 # [Feature Name] 设计文档

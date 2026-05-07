@@ -14,6 +14,7 @@
 ## 仓库地图
 
 - `skills/` — 各技能的 `SKILL.md`、模板与 `examples/`（Cursor 要求子目录名与 frontmatter `name` 一致）。
+- `doc/` — 技能运行时在**工作区根目录**下生成产物的约定根路径（如 `doc/<功能名>/`），具体见各 `SKILL.md`；目录可由使用者首次生成时创建。
 - `agents/` — 编排/子 Agent 的 Markdown 定义（由 `.cursor-plugin/plugin.json` 的 `agents` 数组引用）。
 - `.claude-plugin/` — Claude Code 插件与 marketplace 元数据（`plugin.json`、`marketplace.json`）。
 - `.cursor-plugin/` — Cursor 插件与 marketplace 元数据。
@@ -58,6 +59,7 @@
 
 ## 约定
 
+- 技能生成的 Markdown 等文档默认写入**当前工作区根目录**下的 `doc/`（子路径见各技能，例如 `doc/<功能名>/`、`doc/requirement-review/`），不再使用 `.claude/doc/`。
 - 技能产出文档默认 **中文**（见 `CONTRIBUTING.md`）。
 - **Conventional Commits** 提交说明（`feat` / `fix` / `docs` 等）。
 - 修改技能行为时同步 **examples**、**CHANGELOG**，并按 CONTRIBUTING 递增 **四套版本号**。
@@ -76,4 +78,5 @@
 - 禁止或高风险操作（若有）：勿在文档中写入真实密钥；改技能时勿破坏 frontmatter 必填项或与目录名不一致的 `name`（Cursor 加载要求）；发版相关改动须四面版本一致。
 
 ---
+文档更新记录：2026-05-07 — 约定技能产出根路径为工作区 `doc/`，并补充仓库地图说明。
 文档更新记录：2026-05-06 — 初始化 PROJECT.md（dovelx-init），概述仓库结构、命令、CI 与技能列表。

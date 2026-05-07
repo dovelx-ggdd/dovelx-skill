@@ -1,6 +1,6 @@
 # Phase 2 需求分析模板
 
-保存路径：`.claude/doc/<功能名>/phase2-analysis-<日期>.md`
+保存路径：`doc/<功能名>/phase2-analysis-<日期>.md`
 
 ```markdown
 # 需求分析：<功能名>

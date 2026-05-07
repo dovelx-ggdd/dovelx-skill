@@ -1,6 +1,6 @@
 # Phase 8 任务清单模板
 
-保存路径：`.claude/doc/<功能名>/phase8-tasks-<日期>.md`
+保存路径：`doc/<功能名>/phase8-tasks-<日期>.md`
 
 ```markdown
 # 实现任务清单：<功能名>

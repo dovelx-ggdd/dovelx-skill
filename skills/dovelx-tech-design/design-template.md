@@ -1,12 +1,12 @@
 # 技术设计文档模板
 
-生成技术设计文档时使用此模板。路径：`.claude/doc/<功能名>/design-<日期>-v2.md`
+生成技术设计文档时使用此模板。路径：`doc/<功能名>/design-<日期>-v2.md`
 
 ```markdown
 # 技术方案：<功能名>
 
 **设计日期**：YYYY-MM-DD
-**关联 PRD**：`.claude/doc/<功能名>/design-<日期>-v1.md`
+**关联 PRD**：`doc/<功能名>/design-<日期>-v1.md`
 
 ## 1. 方案概述
 

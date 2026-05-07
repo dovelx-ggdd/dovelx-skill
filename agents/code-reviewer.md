@@ -59,7 +59,7 @@ git diff --name-only HEAD~1
 
 ### Step 4：输出报告
 
-将审查报告保存至 `.claude/doc/<功能名>/code-review-<YYYY-MM-DD>-v<N>.md`，包含：
+将审查报告保存至 `doc/<功能名>/code-review-<YYYY-MM-DD>-v<N>.md`，包含：
 
 1. 审查概览（文件数量、问题总数、最终结论）
 2. 问题清单（按严重等级排序）

@@ -1,6 +1,6 @@
 # Phase 3 方案草稿模板
 
-保存路径：`.claude/doc/<功能名>/phase3-draft-plan-<日期>.md`
+保存路径：`doc/<功能名>/phase3-draft-plan-<日期>.md`
 
 ```markdown
 # 方案草稿：<功能名>

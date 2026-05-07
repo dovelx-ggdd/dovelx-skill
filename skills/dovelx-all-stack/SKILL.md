@@ -26,7 +26,7 @@ Phase 9: Verification           →  phase9-verification-<日期>.md
 
 ## 文档归档总览
 
-所有文档统一保存至 `.claude/doc/<功能名>/`：
+所有文档统一保存至 `doc/<功能名>/`：
 
 | 阶段 | 文件名 | 模板 | 说明 |
 |------|--------|------|------|
@@ -42,13 +42,13 @@ Phase 9: Verification           →  phase9-verification-<日期>.md
 
 ### 文档保存规程（每个 Phase 输出前必须执行）
 
-1. **检查目录**：判断 `.claude/doc/<功能名>/` 是否存在
+1. **检查目录**：判断 `doc/<功能名>/` 是否存在
    - 已存在 → 直接使用，**不重新创建**
    - 不存在 → 创建目录
 2. **确定版本号**：查找目标目录下同前缀同日期文件（如 `phase1-brief-<日期>-v*.md`）
    - 已有同类型文件 → 取最大版本号 +1
    - 无同类型文件 → 从 `v1` 开始
-3. **保存**：`.claude/doc/<功能名>/<phase前缀>-<YYYY-MM-DD>-v<N>.md`
+3. **保存**：`doc/<功能名>/<phase前缀>-<YYYY-MM-DD>-v<N>.md`
 
 ---
 
@@ -65,7 +65,7 @@ Collect essential context before any analysis. Use AskQuestion tool when availab
 5. **Acceptance criteria**: How do we know it's done?
 6. **Dependencies**: Related existing features, APIs, or data models?
 
-**Output**: 保存需求简报至 `.claude/doc/<功能名>/phase1-brief-<日期>.md`，参见 [phase1-brief-template.md](phase1-brief-template.md)。
+**Output**: 保存需求简报至 `doc/<功能名>/phase1-brief-<日期>.md`，参见 [phase1-brief-template.md](phase1-brief-template.md)。
 
 **⛔ 用户授权门控**：展示简报摘要，等待用户授权后方可进入 Phase 2。
 
@@ -81,7 +81,7 @@ Based on the discovery output:
 4. Map the requirement to existing codebase architecture (read existing module structure and key files)
 5. Identify affected modules, entities, APIs
 
-**Output**: 保存需求分析至 `.claude/doc/<功能名>/phase2-analysis-<日期>.md`，参见 [phase2-analysis-template.md](phase2-analysis-template.md)。
+**Output**: 保存需求分析至 `doc/<功能名>/phase2-analysis-<日期>.md`，参见 [phase2-analysis-template.md](phase2-analysis-template.md)。
 
 **⛔ 用户授权门控**：展示分析摘要，等待用户授权后方可进入 Phase 3。
 
@@ -97,7 +97,7 @@ Create an initial implementation plan:
 4. Identify risks and unknowns
 5. Present the draft plan to the user
 
-**Output**: 保存方案草稿至 `.claude/doc/<功能名>/phase3-draft-plan-<日期>.md`，参见 [phase3-draft-plan-template.md](phase3-draft-plan-template.md)。
+**Output**: 保存方案草稿至 `doc/<功能名>/phase3-draft-plan-<日期>.md`，参见 [phase3-draft-plan-template.md](phase3-draft-plan-template.md)。
 
 **⛔ 用户授权门控**：展示工作项清单，等待用户授权后方可进入 Phase 4。
 
@@ -117,7 +117,7 @@ Create an initial implementation plan:
 
 **收到 Agent 结果后，向用户展示**：审查发现 + 2-3 个备选方案对比 + 推荐意见。
 
-**Output**: 保存挑战审查报告至 `.claude/doc/<功能名>/phase4-challenge-review-<日期>.md`，参见 [phase4-challenge-review-template.md](phase4-challenge-review-template.md)。含用户选择结果。
+**Output**: 保存挑战审查报告至 `doc/<功能名>/phase4-challenge-review-<日期>.md`，参见 [phase4-challenge-review-template.md](phase4-challenge-review-template.md)。含用户选择结果。
 
 **⛔ 用户授权门控**：展示备选方案对比，等待用户选定方案并授权后方可进入 Phase 5。
 
@@ -136,7 +136,7 @@ Based on user's choice:
 3. 向用户展示最终验证结果
 4. 若发现问题，迭代直至解决
 
-**Output**: 保存方案选型记录至 `.claude/doc/<功能名>/phase5-solution-<日期>.md`，参见 [phase5-solution-template.md](phase5-solution-template.md)。记录选型理由、迭代过程和最终确认。
+**Output**: 保存方案选型记录至 `doc/<功能名>/phase5-solution-<日期>.md`，参见 [phase5-solution-template.md](phase5-solution-template.md)。记录选型理由、迭代过程和最终确认。
 
 **⛔ 用户授权门控**：展示可行性验证结论，等待用户授权后方可进入 Phase 6。
 
@@ -144,7 +144,7 @@ Based on user's choice:
 
 ## Phase 6: Generate Design Document
 
-Create the design document at `.claude/doc/<功能名>/design-<日期>-v1.md`.
+Create the design document at `doc/<功能名>/design-<日期>-v1.md`.
 
 Read the template from [design-template.md](design-template.md) for the full structure.
 
@@ -157,7 +157,7 @@ Read the template from [design-template.md](design-template.md) for the full str
 5. Risk mitigation
 6. Test strategy
 
-**Output**: `.claude/doc/<功能名>/design-<日期>-v1.md`，参见 [design-template.md](design-template.md)。
+**Output**: `doc/<功能名>/design-<日期>-v1.md`，参见 [design-template.md](design-template.md)。
 
 **⛔ 用户授权门控**：展示设计文档摘要（概述、API、数据模型），等待用户授权后方可进入 Phase 7。
 
@@ -175,7 +175,7 @@ Read the template from [design-template.md](design-template.md) for the full str
 1. Agent 发现问题 → 修复设计文档 → 重新派发 Agent 审查（最多 3 轮）
 2. 审查通过 → 向用户展示设计文档摘要并请求最终授权
 
-**Output**: 保存设计审查报告至 `.claude/doc/<功能名>/phase7-design-review-<日期>.md`，参见 [phase7-design-review-template.md](phase7-design-review-template.md)。记录每轮审查结果和修复记录。
+**Output**: 保存设计审查报告至 `doc/<功能名>/phase7-design-review-<日期>.md`，参见 [phase7-design-review-template.md](phase7-design-review-template.md)。记录每轮审查结果和修复记录。
 
 **⛔ 用户授权门控**：展示审查结论，等待用户最终授权设计文档后方可进入 Phase 8。
 
@@ -185,7 +185,7 @@ Read the template from [design-template.md](design-template.md) for the full str
 
 After user approves the design:
 
-1. 生成任务清单并保存至 `.claude/doc/<功能名>/phase8-tasks-<日期>.md`，参见 [phase8-tasks-template.md](phase8-tasks-template.md)
+1. 生成任务清单并保存至 `doc/<功能名>/phase8-tasks-<日期>.md`，参见 [phase8-tasks-template.md](phase8-tasks-template.md)
 2. Ask user: "Ready to proceed with implementation?"
 3. On confirmation, implement each work item:
    - Follow the project's coding standards (read existing code patterns if no standards file exists)
@@ -196,7 +196,7 @@ After user approves the design:
    - Verify code against design document requirements
    - Validate all acceptance criteria are met
 
-**Output**: `.claude/doc/<功能名>/phase8-tasks-<日期>.md`，记录任务完成状态和主要变更文件。
+**Output**: `doc/<功能名>/phase8-tasks-<日期>.md`，记录任务完成状态和主要变更文件。
 
 **⛔ 用户授权门控**：展示任务清单，等待用户确认任务范围正确后方可开始编码。
 
@@ -211,7 +211,7 @@ Final verification before declaring completion:
 3. **规范合规**：确认代码符合项目编码规范和架构模式
 4. 向用户展示验证报告
 
-**Output**: 保存验证报告至 `.claude/doc/<功能名>/phase9-verification-<日期>.md`，参见 [phase9-verification-template.md](phase9-verification-template.md)。
+**Output**: 保存验证报告至 `doc/<功能名>/phase9-verification-<日期>.md`，参见 [phase9-verification-template.md](phase9-verification-template.md)。
 
 **⛔ 用户授权门控**：展示验证报告，等待用户最终授权后方宣告流程完成。
 

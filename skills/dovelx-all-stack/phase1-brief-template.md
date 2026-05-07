@@ -1,6 +1,6 @@
 # Phase 1 需求简报模板
 
-保存路径：`.claude/doc/<功能名>/phase1-brief-<日期>.md`
+保存路径：`doc/<功能名>/phase1-brief-<日期>.md`
 
 ```markdown
 # 需求简报：<功能名>
