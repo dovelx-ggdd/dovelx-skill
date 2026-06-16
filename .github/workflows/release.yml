@@ -78,7 +78,7 @@ jobs:
             ### 安装 / 更新（Claude Code）
 
             ```
-            /plugin marketplace add DoveXiaZi/dovelx-skill
+            /plugin marketplace add dovelx-ggdd/dovelx-skill
             /plugin install dovelx@dovelx-skill
             ```
 

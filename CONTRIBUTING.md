@@ -27,7 +27,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/DoveXiaZi/dovelx-skill.git
+git clone https://github.com/dovelx-ggdd/dovelx-skill.git
 cd dovelx-skill
 
 # Claude Code：从本地路径安装（开发模式）

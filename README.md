@@ -83,7 +83,7 @@ Cursor **不使用** `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`。编排类技能依
 在终端或 Claude Code 中执行：
 
 ```
-/plugin marketplace add DoveXiaZi/dovelx-skill
+/plugin marketplace add dovelx-ggdd/dovelx-skill
 /plugin install dovelx@dovelx-skill
 ```
 
@@ -141,4 +141,4 @@ Cursor **不使用** `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`。编排类技能依
 
 ## 许可证
 
-MIT © 2026 [DoveXiaZi](https://github.com/DoveXiaZi)
+MIT © 2026 [dovelx-ggdd](https://github.com/dovelx-ggdd)
